@@ -96,6 +96,9 @@
 </head>
 <body>
   <canvas id="canvas"></canvas>
+  <div id="previewContainer" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: calc(100vh - 70px); background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 999;">
+    <img id="previewImage" style="max-width: 90%; max-height: 90%; border: 2px solid #fff; border-radius: 8px;" />
+  </div>
 
   <div id="toolbar">
     <div class="tool-group left-tools">
@@ -105,6 +108,7 @@
       <button id="penBtn" class="tool active">✏️</button>
       <button id="eraserBtn" class="tool">🩹</button>
       <button id="downloadBtn" class="tool">📥</button>
+      <button id="previewBtn" class="tool">🔍 預覽圖</button>
     </div>
     <div class="tool-group right-tools">
       <button id="saveBtn" class="tool important">💾 儲存到伺服器</button>
@@ -122,6 +126,10 @@
     const clearBtn = document.getElementById('clearBtn');
     const saveBtn = document.getElementById('saveBtn');
   
+    const previewBtn = document.getElementById('previewBtn');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight - 60;
@@ -247,7 +255,16 @@
       };
     }
 
+    previewBtn.addEventListener('click', () => {
+      const dataUrl = canvas.toDataURL('image/png');
+      previewImage.src = dataUrl;
+      previewContainer.style.display = 'flex';
+      // alert("📌 手機請長按圖片儲存到相簿");
+    });
 
+    previewContainer.addEventListener('click', () => {
+      previewContainer.style.display = 'none'; // 點畫面關閉預覽
+    });
   </script>
 
 </body>
