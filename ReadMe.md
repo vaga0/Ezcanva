@@ -1,5 +1,7 @@
 # 線上畫板
 
+![](./document/simple-painter.png)
+
 ## 簡介
 一個簡單的 Node.js + Express 線上畫板範例，前端使用 Canvas 繪圖，後端將繪畫圖進行保存。
 
