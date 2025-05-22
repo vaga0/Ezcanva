@@ -10,6 +10,7 @@
 ## 功能
 
 - 畫板 (Canvas)
+- 支援滑鼠與觸控
 - 繪圖同步保存成 PNG
 - 簡易前後端整合，無須額外資料庫
 
@@ -75,4 +76,4 @@ MIT License
 
 ## 聯絡
 
-有問題或建議歡迎提 issue 或聯絡作者。
+有問題或建議歡迎提 issue 或聯絡作者 [kqletonline@gmail.com]。
