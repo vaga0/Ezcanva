@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <title>PDF 簽署系統</title>
+  <title>簡易畫板系統</title>
   <style>
     html, body {
       margin: 0;
@@ -220,9 +220,19 @@
       if (!drawing) return;
       const touch = e.touches[0];
       const pos = getCanvasPos(touch.clientX, touch.clientY);
+
+      ctx.lineWidth = currentSize;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
+
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
+
+      // 新增這兩行：為了每筆觸控後續可繼續畫
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
     });
+
 
     canvas.addEventListener('touchend', (e) => {
       e.preventDefault();
