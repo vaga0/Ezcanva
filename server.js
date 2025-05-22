@@ -23,7 +23,7 @@ app.post('/save-drawing', express.json({ limit: '10mb' }), (req, res) => {
 
   fs.writeFile(filePath, buffer, err => {
     if (err) {
-      return res.status(500).json({ error: 'Failed to save image' });
+      return res.status(500).json({ error: 'Failed to save image', message: 'Failed to save image' });
     }
     res.json({ message: 'Image saved', path: filePath });
   });
