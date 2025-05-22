@@ -96,8 +96,19 @@
 </head>
 <body>
   <canvas id="canvas"></canvas>
-  <div id="previewContainer" style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: calc(100vh - 70px); background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 999;">
-    <img id="previewImage" style="max-width: 90%; max-height: 90%; border: 2px solid #fff; border-radius: 8px;" />
+  <div id="previewContainer" style="
+    display: none;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw; height: calc(100vh - 70px);
+    background-color: rgba(255, 255, 255, 0.99);  /* 深一點 */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;">
+    <img id="previewImage" src="" style="max-width: 90%; max-height: 90%; border: 5px solid black; border-radius: 10px;">
+  </div>
+
+  <div id="message" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.8); color: #fff; padding: 10px 20px; border-radius: 6px; display: none; z-index: 9999;">
   </div>
 
   <div id="toolbar">
@@ -200,8 +211,11 @@
         body: JSON.stringify({ image: dataUrl }),
       })
       .then(res => res.json())
-      .then(data => alert(data.message))
-      .catch(() => alert('存檔失敗'));
+      .then(data => {
+        if (data.message) showMessage('' + data.message )
+        else showMessage('Fail...');
+      })
+      .catch(() => showMessage('存檔失敗'));
     });
 
     document.getElementById('downloadBtn').addEventListener('click', () => {
@@ -260,11 +274,28 @@
       previewImage.src = dataUrl;
       previewContainer.style.display = 'flex';
       // alert("📌 手機請長按圖片儲存到相簿");
+      showMessage("📌 手機請長按圖片儲存到相簿", 5000);
     });
 
     previewContainer.addEventListener('click', () => {
       previewContainer.style.display = 'none'; // 點畫面關閉預覽
     });
+
+    function previewImageFromCanvas() {
+      const dataUrl = canvas.toDataURL('image/png');
+      const img = document.getElementById('previewImage');
+      img.src = dataUrl;
+      document.getElementById('previewContainer').style.display = 'flex';
+    }
+
+    function showMessage(text, duration = 3000) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.style.display = 'block';
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, duration);
+    }
   </script>
 
 </body>
